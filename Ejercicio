@@ -1,0 +1,62 @@
+CREATE TABLE Categoria (
+	idCategoria integer(5) NOT NULL,
+	Nombre varchar(20) NOT NULL,
+    	PRIMARY KEY (idCategoria)
+)
+
+INSERT INTO Categoria VALUES(1,"Acción")
+INSERT INTO Categoria VALUES(2,"Terror")
+INSERT INTO Categoria VALUES(3,"Infantil")
+INSERT INTO Categoria VALUES(4,"Romance")
+INSERT INTO Categoria VALUES(5,"Thiller")
+
+CREATE TABLE Ubicacion(
+	idUbicacion integer(5) NOT NULL,
+	Nombre varchar(50) NOT NULL,
+	PRIMARY KEY(idUbicacion)
+)
+
+
+INSERT INTO Ubicacion VALUES(1,"Las Rozas, Madrid")
+INSERT INTO Ubicacion VALUES(2,"A Coruña, Galicia")
+INSERT INTO Ubicacion VALUES(3,"Moncloa, Madrid")
+INSERT INTO Ubicacion VALUES(4,"Girona, Cataluña")
+
+
+CREATE TABLE Libro (
+  	idLibro integer(5) NOT NULL,
+  	idCategoria integer(5) NOT NULL,
+  	Nombre varchar(50) NOT NULL,
+  	Autor varchar(50) NOT NULL,
+  	FechaPublicacion date NOT NULL,
+	PRIMARY KEY(idLibro),
+	CONSTRAINT idCategoria FOREIGN KEY (idCategoria) REFERENCES Categoria (idCategoria)
+)
+
+
+INSERT INTO Libro VALUES(1,2,"La isla del peligro","Alberto Jimenez","19/2/2022")
+
+CREATE TABLE LibroUnidades(
+	idLibroUnidades integer(5) NOT NULL,
+	idLibro integer(5) NOT NULL, 
+	idUbicacion integer(5) NOT NULL,
+	Codigo varchar(10) NOT NULL,
+	PRIMARY KEY (idLibroUnidades),
+	CONSTRAINT idLibro FOREIGN KEY (idLibro) REFERENCES Libro (idLibro)
+	CONSTRAINT idUbicacion FOREIGN KEY (idUbicacion) REFERENCES Ubicacion (idUbicacion) 
+)
+
+
+INSERT INTO LibroUnidades VALUES(1,2,3,"X9873RT")
+
+CREATE TABLE Venta(
+	idVenta integer(5) NOT NULL,
+	idLibroVenta integer(5) NOT NULL,
+	FechaVenta date NOT NULL,
+	NombreCliente varchar(30) NOT NULL,
+	Precio double(3) NOT NULL,
+	PRIMARY KEY (idVenta),	
+	CONSTRAINT idLibroVenta FOREIGN KEY (idLibroVenta) REFERENCES Libro (idLibro)
+)
+
+INSERT INTO Venta VALUES(1,1,"20/2/2022","Juan",9.99)
